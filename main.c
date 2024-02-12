@@ -6,12 +6,13 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 13:46:32 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/07 19:48:24 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/12 20:24:10 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./mlx/mlx.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 typedef struct	s_data {
 	void	*img;
@@ -20,6 +21,21 @@ typedef struct	s_data {
 	int		line_length;
 	int		endian;
 }				t_data;
+
+typedef struct   s_win {
+    void    *win;
+    void    *ptr;
+}               t_win;
+
+enum {
+	ON_KEYDOWN = 2,
+	ON_KEYUP = 3,
+	ON_MOUSEDOWN = 4,
+	ON_MOUSEUP = 5,
+	ON_MOUSEMOVE = 6,
+	ON_EXPOSE = 12,
+	ON_DESTROY = 17
+};
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -31,19 +47,33 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 int draw_line(void *mlx_ptr, void *mlx_win, int startX, int startY, int endX, int endY, int color)
 {
-    while (startX != endX)
+    while (startX != endX || startX != endY)
     {
-        mlx_pixel_put(mlx_ptr, mlx_win, startX++, startY++, 0x0000FF00);
+        mlx_pixel_put(mlx_ptr, mlx_win, startX, startY, 0x00FF00F0);
+        startX++;
     }
     mlx_loop(mlx_ptr);
     return 1;
 }
 
+int	close_win(int keycode, t_win *var)
+{
+    printf("key pressed\n");
+	mlx_destroy_window(var->ptr, var->win);
+    free(var->ptr);
+    free(var);
+	return (0);
+}
+
 int main()
 {
-    void    *mlx_ptr;
-    void    *mlx_win;
+    t_win   *mlx_ptr;
+    t_win   *mlx_win;
     t_data  img;
+    int     x = 0;
+    int     y = 0;
+    int     length = 720;
+    int     width = 480;
     
     mlx_ptr = mlx_init();
     if (!mlx_ptr)
@@ -51,17 +81,25 @@ int main()
         free(mlx_ptr);
         return (1);
     }
-    mlx_win = mlx_new_window(mlx_ptr, 1280, 720, "NAHUI");
-    img.img = mlx_new_image(mlx_ptr, 1280 ,720);
-    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
-    draw_line(mlx_ptr, mlx_win, 0, 0, 1280, 1280, 0x00FF0000);
-    // my_mlx_pixel_put(&img, width, length, 0x00FF0000);
-    mlx_put_image_to_window(mlx_ptr, mlx_win, img.img, 0, 0);
+    mlx_win = mlx_new_window(mlx_ptr, length, width, "NAHUI");
+    if (!mlx_win)
+    {
+        free(mlx_win);
+        return (1);
+    }
+    while (x <= length && y <= width)
+    {
+        mlx_pixel_put(mlx_ptr, mlx_win, x++, y, 0xFFFF00);
+        if (x == length)
+        {
+            y++;
+            x = 0;
+        }
+    }
     if (!mlx_win)
         return (free(mlx_ptr), 1);
-    mlx_loop(mlx_ptr);
-	mlx_destroy_window(mlx_ptr, mlx_win);
-	free(mlx_ptr);
+    mlx_key_hook(mlx_win, close_win, mlx_win);
+    printf("pas d'accord\n");
+    mlx_loop(mlx_ptr);  
 	return (0);
 }
