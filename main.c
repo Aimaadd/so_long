@@ -6,36 +6,15 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 13:46:32 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/12 20:24:10 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:35:30 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./mlx/mlx.h"
 #include <stdlib.h>
 #include <stdio.h>
-
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
-
-typedef struct   s_win {
-    void    *win;
-    void    *ptr;
-}               t_win;
-
-enum {
-	ON_KEYDOWN = 2,
-	ON_KEYUP = 3,
-	ON_MOUSEDOWN = 4,
-	ON_MOUSEUP = 5,
-	ON_MOUSEMOVE = 6,
-	ON_EXPOSE = 12,
-	ON_DESTROY = 17
-};
+#include <limits.h>
+#include "so_long.h"
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -58,48 +37,82 @@ int draw_line(void *mlx_ptr, void *mlx_win, int startX, int startY, int endX, in
 
 int	close_win(int keycode, t_win *var)
 {
-    printf("key pressed\n");
-	mlx_destroy_window(var->ptr, var->win);
-    free(var->ptr);
-    free(var);
+    if (keycode == 53)
+    {
+	    mlx_clear_window(var->ptr, var->win);
+        mlx_destroy_window(var->ptr, var->win);
+        exit(0);
+    }
 	return (0);
 }
 
-int main()
+int disp_color(int length, int width, t_win *mlg, int color)
 {
-    t_win   *mlx_ptr;
-    t_win   *mlx_win;
-    t_data  img;
-    int     x = 0;
-    int     y = 0;
-    int     length = 720;
-    int     width = 480;
-    
-    mlx_ptr = mlx_init();
-    if (!mlx_ptr)
+     int    x = 0;
+     int    y = 0;
+     while (x <= length && y <= width)
     {
-        free(mlx_ptr);
-        return (1);
-    }
-    mlx_win = mlx_new_window(mlx_ptr, length, width, "NAHUI");
-    if (!mlx_win)
-    {
-        free(mlx_win);
-        return (1);
-    }
-    while (x <= length && y <= width)
-    {
-        mlx_pixel_put(mlx_ptr, mlx_win, x++, y, 0xFFFF00);
+        mlx_pixel_put(mlg->ptr, mlg->win, x++, y, color);
         if (x == length)
         {
             y++;
             x = 0;
         }
     }
-    if (!mlx_win)
-        return (free(mlx_ptr), 1);
-    mlx_key_hook(mlx_win, close_win, mlx_win);
-    printf("pas d'accord\n");
-    mlx_loop(mlx_ptr);  
+    return 0;
+}
+
+// int render_next(void *astruct)
+// {
+//      while (color <= INT_MAX)
+//     {
+//         if (color == INT_MAX)
+//             color = 0;
+//         else
+//         {
+//             disp_color(length, width, mlg, color);
+//             color++;
+//         }
+//     } 
+// }
+
+int mouse_hi_bye(int keycode, t_win *var)
+{
+    if (keycode == ON_EXPOSE)
+        printf("hi\n");
+    if (keycode == ON_MOUSEUP)
+        printf("bye\n");
+    return 0;
+}
+
+t_win  new_img(void *mlg)
+{
+    t_win  img;
+    img.img = mlx_xpm_file_to_image(mlg, CRATE, &img.width, &img.length);
+    return (img);
+}
+
+int main()
+{
+    t_win   mlg;
+    t_data  img;
+    char    *img_addr;
+    int     x = 0;
+    int     y = 0;
+    int     length = 720;
+    int     width = 480;
+    int     color = 0;
+    
+    mlg.ptr = mlx_init();
+    mlg.win = mlx_new_window(mlg.ptr, length, width, "NAHUI");
+    img.img = mlx_new_image(mlg.ptr, length, width);
+    img_addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+    mlx_put_image_to_window(mlg.ptr, mlg.win, img.img, mlg.width, mlg.length);
+    // new_img(&mlg);
+    // disp_color(length, width, mlg, color++);
+    mlx_key_hook(mlg.win, close_win, &mlg);
+    // mlx_loop_hook(mlg, render_next, );
+    mlx_loop(mlg.ptr);
+     
 	return (0);
 }
