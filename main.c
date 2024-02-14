@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 13:46:32 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/13 19:35:30 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:50:33 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 #include <stdio.h>
 #include <limits.h>
 #include "so_long.h"
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
 
 int draw_line(void *mlx_ptr, void *mlx_win, int startX, int startY, int endX, int endY, int color)
 {
@@ -85,17 +77,22 @@ int mouse_hi_bye(int keycode, t_win *var)
     return 0;
 }
 
-t_win  new_img(void *mlg)
+void    put_images(t_win *mlg)
 {
-    t_win  img;
-    img.img = mlx_xpm_file_to_image(mlg, CRATE, &img.width, &img.length);
-    return (img);
+    int len;
+
+    len = 32;
+    mlg->img.wall = mlx_xpm_file_to_image(mlg->win, CRATE, &len, &len);
+    if (mlg->img.wall == NULL)
+    {
+        printf("raté\n");
+    }
+    mlx_put_image_to_window(mlg->ptr, mlg->win, mlg->img.wall, len, len);
 }
 
 int main()
 {
     t_win   mlg;
-    t_data  img;
     char    *img_addr;
     int     x = 0;
     int     y = 0;
@@ -105,13 +102,8 @@ int main()
     
     mlg.ptr = mlx_init();
     mlg.win = mlx_new_window(mlg.ptr, length, width, "NAHUI");
-    img.img = mlx_new_image(mlg.ptr, length, width);
-    img_addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-    mlx_put_image_to_window(mlg.ptr, mlg.win, img.img, mlg.width, mlg.length);
-    // new_img(&mlg);
-    // disp_color(length, width, mlg, color++);
+    put_images(&mlg);
     mlx_key_hook(mlg.win, close_win, &mlg);
-    // mlx_loop_hook(mlg, render_next, );
     mlx_loop(mlg.ptr);
      
 	return (0);
