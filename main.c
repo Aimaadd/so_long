@@ -3,17 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abentaye <abentaye@student.s19.be>         +#+  +:+       +#+        */
+/*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 13:46:32 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/17 16:59:55 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/19 13:50:15 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./mlx/mlx.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <limits.h>
 #include "so_long.h"
 
 int	close_win(int keycode, t_win *var)
@@ -41,6 +37,19 @@ int disp_color(int length, int width, t_win *mlg, int color)
         }
     }
     return 0;
+}
+
+void    put_bee(t_win *mlg)
+{
+    int len;
+    int x;
+    int y;
+
+    y = 0;
+    x = 0;
+    len = 2400;
+    mlg->img.wall = mlx_xpm_file_to_image(mlg->win, BEE, &len, &len);
+    mlx_put_image_to_window(mlg->ptr, mlg->win, mlg->img.wall, 64, 64);
 }
 
 void    put_images(t_win *mlg)
@@ -82,6 +91,7 @@ int main()
     mlg.ptr = mlx_init();
     mlg.win = mlx_new_window(mlg.ptr, length, width, "NAHUI");
     put_images(&mlg);
+    put_bee(&mlg);
     mlx_key_hook(mlg.win, close_win, &mlg);
     mlx_loop(mlg.ptr);
      
