@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:33:25 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/19 16:26:28 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:36:51 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,20 @@ int	close_win(int keycode, t_win *var)
 //     return 0;
 // }
 
-void    put_wall(t_win *mlg)
+void    put_wall(t_win *mlg, int length, int width)
 {
     int len;
     int x;
     int y;
     
-    y = 0;
-    x = 0;
     len = 128;
-    if (mlg->img.wall == NULL)
-    {
-        printf("raté\n");
-    }
-    while (x <= 512 && y <= 512)
+    x = 0;
+    y = 0;
+    while (x <= length && y <= width)
     {
         mlx_put_image_to_window(mlg->ptr, mlg->win, mlg->img.wall, x, y);
         x += 64;
-        if (x == 512)
+        if (x == length)
         {
             y += 64;
             x = 0;

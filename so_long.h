@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:54:56 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/19 16:21:15 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:36:17 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int		close_win(int keycode, t_win *var);
 void	put_bee(t_win *mlg);
 void    put_images(t_win *mlg);
 void    set_img(t_win *content);
-void	put_wall(t_win *mlg);
+void    put_wall(t_win *mlg, int length, int width);
 void	put_floor(t_win *mlg);
 void    put_collectible(t_win *mlg);
 
