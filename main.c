@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 13:46:32 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/20 16:27:42 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/20 22:09:31 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int main(int argc , char **argv)
     int     color = 0;
     
     args_handler(argc, argv);
-    mlg.ptr = mlx_init();
-    mlg.win = mlx_new_window(mlg.ptr, length, width, "NAHUI");
+    read_map(argv[1]);
+    init_display(&mlg, length, width);
     set_img(&mlg);
     put_wall(&mlg, length, width);
     put_floor(&mlg);

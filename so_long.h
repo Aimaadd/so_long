@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:54:56 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/20 17:12:08 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/20 21:49:12 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ enum {
 };
 
 int		close_win(int keycode, t_win *var);
+void	init_display(t_win *mlg, int length, int width);
 void	put_bee(t_win *mlg);
 void    put_images(t_win *mlg);
 void    set_img(t_win *content);
@@ -63,13 +64,15 @@ void    put_wall(t_win *mlg, int length, int width);
 void	put_floor(t_win *mlg);
 void    put_collectible(t_win *mlg);
 void    put_exit(t_win *mlg);
+void	read_map(char *map);
+
 
 /* UTILS */
 int ft_strncmp(char *s1, char *s2, size_t n);
 size_t	ft_strlen(const char *s);
 
 /* GNL */
-int		get_next_line(int fd, char **line);
+char	*get_next_line(int fd);
 char	*read_and_keep(int fd, char *remn_str);
 char	*ft_get_line(char *remn_str);
 char	*ft_strjoin(char *remn_str, char *buff);

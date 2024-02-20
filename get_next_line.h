@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:41:51 by abentaye          #+#    #+#             */
-/*   Updated: 2023/07/30 19:50:43 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/20 21:48:20 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
+#include "./so_long.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1000
