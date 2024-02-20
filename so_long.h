@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
+/*   By: abentaye <abentaye@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:54:56 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/19 16:36:17 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:12:08 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <limits.h>
-#include <mlx.h>
+#include <unistd.h>
+#include <stdarg.h>
+#include <fcntl.h>
+// #include <mlx.h>
 
 # ifndef SO_LONG_H
 # define SO_LONG_H
-# define CRATE "./pic/crate.xpm"
-# define BEE "./pic/bee.xpm"
-# define FLOOR "./pic/grassfloor.xpm"
-# define HONEY "./pic/honey.xpm"
+# define CRATE "./textures/crate.xpm"
+# define BEE "./textures/bee.xpm"
+# define FLOOR "./textures/grassfloor.xpm"
+# define HONEY "./textures/honey.xpm"
+# define EXIT "./textures/beehive.xpm"
 
 typedef struct	s_img
 {
@@ -58,6 +62,19 @@ void    set_img(t_win *content);
 void    put_wall(t_win *mlg, int length, int width);
 void	put_floor(t_win *mlg);
 void    put_collectible(t_win *mlg);
+void    put_exit(t_win *mlg);
+
+/* UTILS */
+int ft_strncmp(char *s1, char *s2, size_t n);
+size_t	ft_strlen(const char *s);
+
+/* GNL */
+int		get_next_line(int fd, char **line);
+char	*read_and_keep(int fd, char *remn_str);
+char	*ft_get_line(char *remn_str);
+char	*ft_strjoin(char *remn_str, char *buff);
+char	*ft_strchr(const char *s, int c);
+char	*new_remn_str(char *remn_str);
 
 
 # endif
