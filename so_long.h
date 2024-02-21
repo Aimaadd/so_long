@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:54:56 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/20 21:49:12 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:59:02 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@
 # define FLOOR "./textures/grassfloor.xpm"
 # define HONEY "./textures/honey.xpm"
 # define EXIT "./textures/beehive.xpm"
+
+typedef struct s_map_info
+{
+    int num_lines;
+    int line_length;
+    int player_count;
+    int collectible_count;
+}              t_map_info;
 
 typedef struct	s_img
 {
@@ -55,16 +63,16 @@ enum {
 	ON_DESTROY = 17
 };
 
-int		close_win(int keycode, t_win *var);
-void	init_display(t_win *mlg, int length, int width);
-void	put_bee(t_win *mlg);
-void    put_images(t_win *mlg);
-void    set_img(t_win *content);
-void    put_wall(t_win *mlg, int length, int width);
-void	put_floor(t_win *mlg);
-void    put_collectible(t_win *mlg);
-void    put_exit(t_win *mlg);
-void	read_map(char *map);
+int			close_win(int keycode, t_win *var);
+void		init_display(t_win *mlg, int length, int width);
+void		put_bee(t_win *mlg);
+void    	put_images(t_win *mlg);
+void    	set_img(t_win *content);
+void    	put_wall(t_win *mlg, int length, int width);
+void		put_floor(t_win *mlg);
+void    	put_collectible(t_win *mlg);
+void    	put_exit(t_win *mlg);
+t_map_info	read_map(char *map);
 
 
 /* UTILS */

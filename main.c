@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 13:46:32 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/20 22:09:31 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:47:14 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,12 @@ int args_handler(int argc, char **argv)
 int main(int argc , char **argv)
 {
     t_win   mlg;
-    char    *img_addr;
-    int     x = 0;
-    int     y = 0;
     int     length = 512;
     int     width = 512;
-    int     color = 0;
     
     args_handler(argc, argv);
     read_map(argv[1]);
     init_display(&mlg, length, width);
-    set_img(&mlg);
     put_wall(&mlg, length, width);
     put_floor(&mlg);
     put_bee(&mlg);

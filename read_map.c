@@ -6,44 +6,47 @@
 /*   By: abentaye <abentaye@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:39:56 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/20 22:09:47 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:58:27 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./so_long.h"
 
-void read_map(char *map)
+t_map_info	read_map(char *map)
 {
-    int fd;
-    char *line;
-    char ret;
-    int line_length = 0;
-    int num_lines = 0;
+    int		fd;
+    char	*line;
+    t_map_info map_info;
 
+    map_info = (t_map_info){0, 0, 0, 0};
     fd = open(map, O_RDONLY);
     if (fd < 0)
-    {
-        printf("Error\n");
         exit(1);
-    }
-    while ((ret = *get_next_line(fd)) > 0)
+    while ((line = get_next_line(fd)))
     {
-        if (line_length == 0)
-        {
-            line_length = ft_strlen(line);
-        }
-        else if (ft_strlen(line) != line_length)
-        {
-            printf("Error: All lines must have the same length.\n");
+        if (!map_info.line_length)
+            map_info.line_length = ft_strlen(line);
+        else if (ft_strlen(line) != map_info.line_length)
             exit(1);
+        for (int i = 0; line[i]; i++)
+        {
+            if (line[i] == 'P') map_info.player_count++;
+            if (line[i] == 'C') map_info.collectible_count++;
         }
-        num_lines++;
+        map_info.num_lines++;
         free(line);
     }
-    free(line);
     close(fd);
-    printf("Line length: %d\n", line_length);
-    printf("Number of lines: %d\n", num_lines);
+    return map_info;
+}
+
+ void    map_check(char *map)
+{
+    t_map_info map_info;
+
+    map_info = read_map(map);
+    if (map_info.num_lines < 3 || map_info.line_length < 3 || map_info.num_lines == map_info.line_length || map_info.player_count < 1 || map_info.collectible_count < 1)
+        exit(1);
 }
 
 // one char == one 64x64 
