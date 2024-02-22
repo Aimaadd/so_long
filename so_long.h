@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:54:56 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/21 14:59:02 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:50:54 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_map_info
     int line_length;
     int player_count;
     int collectible_count;
+	int exit_count;
 }              t_map_info;
 
 typedef struct	s_img
@@ -73,7 +74,8 @@ void		put_floor(t_win *mlg);
 void    	put_collectible(t_win *mlg);
 void    	put_exit(t_win *mlg);
 t_map_info	read_map(char *map);
-
+void		map_check(char *map);
+int    controls(int keycode, t_win *mlg);
 
 /* UTILS */
 int ft_strncmp(char *s1, char *s2, size_t n);

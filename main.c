@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 13:46:32 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/21 14:47:14 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:47:36 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@ int main(int argc , char **argv)
     int     width = 512;
     
     args_handler(argc, argv);
-    read_map(argv[1]);
+    map_check(argv[1]);
     init_display(&mlg, length, width);
     put_wall(&mlg, length, width);
     put_floor(&mlg);
     put_bee(&mlg);
     put_collectible(&mlg);
     put_exit(&mlg);
-    mlx_key_hook(mlg.win, close_win, &mlg);
+    mlx_key_hook(mlg.win, controls, &mlg);
+    mlx_hook(mlg.win, 17, 0, (void *)exit, 0);
     mlx_loop(mlg.ptr);
      
 	return (0);

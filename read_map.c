@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:39:56 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/21 14:58:27 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:12:32 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_map_info	read_map(char *map)
         {
             if (line[i] == 'P') map_info.player_count++;
             if (line[i] == 'C') map_info.collectible_count++;
+            if (line[i] == 'E') map_info.exit_count++;
         }
         map_info.num_lines++;
         free(line);
@@ -40,14 +41,21 @@ t_map_info	read_map(char *map)
     return map_info;
 }
 
- void    map_check(char *map)
+void    map_check(char *map)
 {
     t_map_info map_info;
 
     map_info = read_map(map);
-    if (map_info.num_lines < 3 || map_info.line_length < 3 || map_info.num_lines == map_info.line_length || map_info.player_count < 1 || map_info.collectible_count < 1)
+    if (map_info.num_lines < 3
+        || map_info.line_length < 3
+        || map_info.num_lines == map_info.line_length
+        || map_info.player_count != 1
+        || map_info.collectible_count < 1
+        || map_info.exit_count < 1)
         exit(1);
 }
+
+
 
 // one char == one 64x64 
 // CRATE are around the map associated char is 1
