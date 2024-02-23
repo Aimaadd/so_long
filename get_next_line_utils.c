@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abentaye <abentaye@student.s19.be>         +#+  +:+       +#+        */
+/*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:39:50 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/21 12:38:19 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:16:07 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_strchr(const char *s, int c)
 	{
 		if (s[i] == (char) c)
 			return ((char *)&s[i]);
-	i++;
+		i++;
 	}
 	return (0);
 }
