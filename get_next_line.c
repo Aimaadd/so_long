@@ -6,11 +6,12 @@
 /*   By: abentaye <abentaye@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 20:14:20 by abentaye          #+#    #+#             */
-/*   Updated: 2024/02/20 21:48:28 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/03/25 23:16:27 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "./so_long.h"
 
 char	*read_and_keep(int fd, char *remn_str)
 {
