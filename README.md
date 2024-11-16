@@ -41,7 +41,7 @@ and the game validates the structure before running.
 ## Installation
 
 ### Prerequisites
-- **GCC** or another C compiler.
+- **CC** or another C compiler.
 - **Make** for building the project.
 - MiniLibX library (included or installable).
 
